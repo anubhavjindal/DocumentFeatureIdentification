@@ -1,0 +1,42 @@
+{% extends "main.html" %}
+{% block content %}
+    <hr>
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Classified files</h3>
+                </div>
+                <div class="panel-body">
+                    
+                    <table class="listing">
+                        <tbody>
+                            <tr>
+                                <th width="50%">File Name</th>
+                                <th width="50%">Category</th>
+                            </tr>
+                    
+                            {% for file in final %}
+                            <tr>
+                                <td width="50%">{{ file }}</td>
+                                <td>{{ final[file] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <form action="/getzip/" method="POST" >
+        <div class="row">
+            <div class="col-sm-2 col-sm-offset-5">
+                <input type="submit" class="btn btn-danger getzip" name="getzip" value="Get ZIP file">
+            </div>
+        </div>
+    </form>
+{% endblock %}

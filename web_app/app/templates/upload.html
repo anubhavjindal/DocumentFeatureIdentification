@@ -1,0 +1,72 @@
+{% extends "main.html" %}
+{% block content %}
+    <hr>
+    <div class="row">
+        <div class="col-sm-2 col-sm-offset-5">
+            <form action="/classify/" method="POST" >
+                <input type="submit" class="btn btn-success classify" name="classify" value="Classify">
+            </form>
+        </div>
+    </div>
+    <br>
+
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">List of files</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="listing">
+                        <tbody>
+                            {% if user.fetch_files() %}
+                                {% for file in user.fetch_files() %}
+                                <tr>
+                                    <td width="50%">{{ file }}</td>
+                                    <td>
+                                        <form action="/delete/{{ file }}" method="post"> 
+                                            <input type="submit" class="btn btn-default btn-sm" name="remove" value="Remove"> 
+                                        </form> 
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="2">No uploaded file found.</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-8">
+            {% if responses %}
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Upload Results</h3>
+              </div>
+              <div class="panel-body">
+                    <ol>
+                    {% for response in responses %}
+                        {% if responses[response]==1 %}
+                            <li>The file <strong>{{ response }}</strong> has been uploaded successfully.</li>
+                        {% else %}
+                            <li>The file <strong>{{ response }}</strong> couldn't be uploaded as this file extension is not allowed.</li>
+                        {% endif %}
+                    {% endfor %}
+                    </ol>
+              </div>
+            </div>
+            {% endif %}
+        </div>   
+    </div>
+
+
+{% endblock %}
